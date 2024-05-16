@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["gunicorn", "stocks_products.wsgi", "-b", "0.0.0.0:8000"]
+CMD python manage.py migrate \
+    && python manage.py collectstatic  --no-input\
+    && gunicorn stocks_products.wsgi:application -b 0.0.0.0:8000
